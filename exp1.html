@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Cantilever with Point Load</title>
+
+<script type="text/javascript" src = "assets/js/three.min.js"></script>
+<script type="text/javascript" src = "assets/js/TrackballControls.js"></script>
+<script type="text/javascript" src = "assets/js/Chart.min.js"></script>
+
+<!-- Google fonts -->
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+
+<!-- font awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- bootstrap -->
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+
+<!-- animate.css -->
+<link rel="stylesheet" href="assets/animate/animate.css" />
+<link rel="stylesheet" href="assets/animate/set.css" />
+
+<!-- gallery -->
+<link rel="stylesheet" href="assets/gallery/blueimp-gallery.min.css">
+
+<!-- favicon -->
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="images/faviconn.ico" type="image/x-icon">
+
+
+<link rel="stylesheet" href="assets/style.css">
+
+<script type="text/javascript">
+    function listOption() {
+      var shape = document.getElementById('shapeOfCantilever').value;
+      switch(shape){
+        case "Cuboidal" : //alert("Cuboidal");
+                  document.getElementById("PropertiesOfCantilever").innerHTML =
+                  '<div class="form-group">' + 
+                    '<label class="control-label col-sm-2" for="sel1">Length Of Cantilever :</label>' + 
+                        '<div class="col-sm-2"><input type="text" class="form-control" id="lengthOfCantilever"></div> ' + 
+                          '<div class="col-sm-1"><select class="form-control"> ' + 
+                            '<option>mm</option> ' + 
+                            '<option>cm</option> ' +
+                            '<option>m</option> ' + 
+                          '</select></div></div> ' + 
+                      ' ' + 
+                      '<div class="form-group"><label class="control-label col-sm-2" for="sel1">Breath Of Cantilever :</label> ' + 
+                        '<div class="col-sm-2"><input type="text" class="form-control" id="breathOfCantilever"></div> ' + 
+                          '<div class="col-sm-1"><select class="form-control"> ' + 
+                            '<option>mm</option> ' + 
+                            '<option>cm</option> ' + 
+                            '<option>m</option> ' +
+                          '</select></div></div> ' + 
+                      ' ' + 
+                      '<div class="form-group"><label class="control-label col-sm-2" for="sel1">Depth Of Cantilever :</label> ' + 
+                        '<div class="col-sm-2"><input type="text" class="form-control" id="depthOfCantilever"></div> ' + 
+                          '<div class="col-sm-1"><select class="form-control"> '+ 
+                            '<option>mm</option>' + 
+                            '<option>cm</option>' + 
+                            '<option>m</option>' + 
+                            '</select></div> ' + 
+                  '</div>'
+                  break;
+
+        case "Cylinderical" : //alert("Cylinderical");
+                    document.getElementById("PropertiesOfCantilever").innerHTML = 
+                    '<div class="form-group"> ' +
+                    '<label class="control-label col-sm-2" for="sel1">Length Of Cantilever :</label> ' + 
+                        '<div class="col-sm-2"><input class="form-control" type="text" id="lengthOfCantilever"></div> ' +    
+                          '<div class="col-sm-1"><select class="form-control"> ' +   
+                            '<option>mm</option> ' +  
+                            '<option>cm</option> ' +  
+                            '<option>m</option> ' +   
+                          '</select></div></div> ' + 
+                        ' ' +   
+                      '<div class="form-group"><label class="control-label col-sm-2" for="sel1">Radius Of Cantilever :</label> ' + 
+                        '<div class="col-sm-2"><input type="text" class="form-control" id="radiusOfCantilever"></div> ' +  
+                          '<div class="col-sm-1"><select class="form-control"> ' + 
+                            '<option>mm</option> ' +  
+                            '<option>cm</option> ' +  
+                            '<option>m</option> ' +   
+                          '</select></div> ' +  
+                    '</div>'  
+                    break;
+      }
+    }
+</script>
+
+</head>
+
+<body>
+<div class="topbar animated fadeInLeftBig"></div>
+
+<!-- Header Starts -->
+<div class="navbar-wrapper">
+      <div class="container">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation" id="top-nav">
+          <div class="container">
+            <div class="navbar-header">
+              <!-- Logo Starts -->
+              <a class="navbar-brand" href="index.html"><img src="images/dcelogo.jpg" alt="logo"></a>
+              <!-- #Logo Ends -->
+
+
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+            </div>
+
+
+            <!-- Nav Starts -->
+            <div class="navbar-collapse  collapse">
+              <ul class="nav navbar-nav navbar-right scroll">
+                 <li class="active"><a href="index.html">Home</a></li>
+                 <li ><a href="about.html">About</a></li>
+              </ul>
+            </div>
+            <!-- #Nav Ends -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+<!-- #Header Starts -->
+<div id="works">
+<h2 class="text-center wowload fadeInUp" style="background-color: #4d4d4d; color: #fff">CANTILEVER WITH POINT LOAD</h2>
+<center><h2>Inputs</h2></center>
+<div class="container">
+  <form class="form-horizontal">
+      <div class="form-group">
+        <label class="control-label col-sm-3" for="sel1">Select Shape of Cantilever :</label>
+        <div class="col-sm-5">
+        <select onchange="listOption()" class="form-control" id="shapeOfCantilever">
+          <option>Cuboidal</option>
+          <option>Cylinderical</option>
+        </select>
+        </div>
+        </div>
+      
+
+    <dir id="PropertiesOfCantilever">
+    </dir>
+
+    <div class="form-group">
+    <label class="control-label col-sm-2" for="sel1">Weight Of Load :</label>
+    <div class="col-sm-4">
+     <input type="text" class="form-control" value="500" id="loadApplied">
+     </div>
+     <div class="col-sm-1">
+             <select class="form-control">
+              <option>N</option>
+              <option>KN</option>
+              <option>MN</option>
+            </select>
+      </div>
+    
+    </div>
+    <div class="form-group">
+    <label class="control-label col-sm-2" for="sel1">Elasticity Of Cantilever :</label>
+    <div class="col-sm-5">
+    <select class="form-control">
+      <option>Steel</option>
+      <option>Aluminium</option>
+      <option>Iron</option>
+      <option>Concrete</option>
+    </select>
+    <br><br>
+    <input type="button" class="btn btn-primary" value="Calculate Deflection" onclick="restoreAllVariables()">
+    <br><br><br><br>
+    </div>
+    </div>
+
+  </form>
+  </div>
+
+</div>  
+
+<div hidden="" id="AllOutputs">
+		<center><h2>Outputs</h2></center>
+			<div class="container">
+    			<form class="form-horizontal">
+        			<div class="form-group">
+						<label class="control-label col-sm-2" for="sel1">At Length :</label>
+						<div class="col-sm-4">
+							<input type="number" class="form-control" id="BenPosition" min="0" size="30">
+						</div>
+						<div class="col-sm-1">
+							<select id="BenPositionUnit" class="form-control">
+								<option >mm</option>
+								<option >cm</option>
+								<option >m</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="sel1">Bending Moment :</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="bendingMoment" readonly="true">
+						</div>
+						<div class="col-sm-1">
+							<select id="BenPositionUnitOutput" class="form-control">
+								<option >mm</option>
+								<option >cm</option>
+								<option >m</option>
+							</select>
+						</div>
+					</div><br>
+					<div class="form-group">
+						<div class="col-sm-2">
+						</div>
+						<div class="col-sm-5">
+							<input type="button" class="btn btn-primary" value="Calculate Bending Moment" onclick="calculateBenMoment()" >
+						</div>
+					</div>
+
+					<br><br>
+
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="sel1">At Length :</label>
+						<div class="col-sm-4">
+							<input type="number" class="form-control" id="lenPosition" min="0" max="">
+						</div>
+						<div class="col-sm-1">
+							<select id="lenPositionUnit" class="form-control">
+								<option >mm</option>
+								<option >cm</option>
+								<option >m</option>
+							</select>
+						</div>
+					</div>
+						
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="sel1">Deflection Of Cantilever :</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="cantileverDeflection" readonly="true" size="30" >
+						</div>
+						<div class="col-sm-1">
+							<select id="lenPositionUnitOutput" class="form-control">
+								<option >mm</option>
+								<option >cm</option>
+								<option >m</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-2">
+						</div>
+						<div class="col-sm-5">
+							<input type="button" class="btn btn-primary" value="Calculate Deflection" onclick="calculateDeflection()" >
+						</div>
+					</div>
+						
+						<!---<select onchange="formatCantileverDeflection()"  id="cantileverDeflectionUnit">
+							<option>mm</option>
+							<option>cm</option>
+							<option>m</option>
+						</select> -->
+						<br><br>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="sel1">Slope Of Cantilever :</label>
+							<div class="col-sm-5">
+								<input type="text" class="form-control" id="cantileverSlope" readonly="true" size="30">
+							</div>
+						</div>
+					</form>
+				</div>
+
+			<br><br><br><br>
+			<center><h2>Simulation</h2></center>
+			<dir>
+				<label class="control-label col-sm-4" for="sel1">Click Here to Show Bending Moment Graph :</label>
+				<input type="button" class="btn btn-primary" value="Bending Moment Graph" onclick="ShowBendingMomentGraph()">
+
+				<br><br>
+
+				<label class="control-label col-sm-4" for="sel1">Click Here to Show Delflection Of Cantilever :</label>
+				<input type="button" class="btn btn-primary" value="Animation" onclick="ShowDeflection()">
+			</dir>
+		
+		<div hidden="true" id="HideOrShowBendingMomentGraph">
+			<center><h1><u>BENDING MOMENT</u> </h1></center>
+			<div>
+				<canvas id="BendingMomentGraph"></canvas>
+			</div>
+		</div>
+		
+		<div  id="HideOrShowDeflection">	
+			<center><h1><u>DEFLECTION</u></h1></center>	
+			<dir>
+				Hold and Drag, Mouse Left Button to Rotate the Structure.<br>
+				Hold and Drag, Mouse Middle Button to Zoom In/Out of the Structure.<br>
+				Hold and Drag, Mouse Right Button to Move the Structure.<br>
+			</dir>
+		</div>	
+</div>	
+
+<dir id="canvas"></dir>
+
+</body>
+<script type="text/javascript">
+  //for listing the properties of cantilever first time as default is cuboidal
+  document.getElementById("PropertiesOfCantilever").innerHTML = '<div class="form-group">' + 
+                    '<label class="control-label col-sm-2" for="sel1">Length Of Cantilever :</label>' + 
+                        '<div class="col-sm-2"><input type="text" class="form-control" id="lengthOfCantilever" value="1000"></div> ' + 
+                          '<div class="col-sm-1"><select class="form-control"> ' + 
+                            '<option>mm</option> ' + 
+                            '<option>cm</option> ' +
+                            '<option>m</option> ' + 
+                          '</select></div></div> ' + 
+                      ' ' + 
+                      '<div class="form-group"><label class="control-label col-sm-2" for="sel1">Breath Of Cantilever :</label> ' + 
+                        '<div class="col-sm-2"><input type="text" class="form-control" id="breathOfCantilever" value="500"></div> ' + 
+                          '<div class="col-sm-1"><select class="form-control"> ' + 
+                            '<option>mm</option> ' + 
+                            '<option>cm</option> ' + 
+                            '<option>m</option> ' +
+                          '</select></div></div> ' + 
+                      ' ' + 
+                      '<div class="form-group"><label class="control-label col-sm-2" for="sel1">Depth Of Cantilever :</label> ' + 
+                        '<div class="col-sm-2"><input type="text" class="form-control" id="depthOfCantilever" value="250"></div> ' + 
+                          '<div class="col-sm-1"><select class="form-control"> '+ 
+                            '<option>mm</option>' + 
+                            '<option>cm</option>' + 
+                            '<option>m</option>' + 
+                            '</select></div> ' + 
+                  '</div>'
+</script>
+<script type="text/javascript" src = "assets/js/cantilever.js"></script>
+</html>
